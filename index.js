@@ -877,18 +877,26 @@
       target === document.body ||
       target === document.documentElement
     ) {
+      debug('Targer exit')
+
       return;
     }
 
     // Only handle elements with plain text content
     if (!hasPlainTextContent(target) && !isImageElement(target)) {
+      debug('Editor not eligable exit')
       return;
     }
 
+    debug('Found element')
+
     const targetElement = hasPlainTextContent(target) ? target : getImageElement(target)
 
+    debug('targetElement')
     // Skip hover effects on persistently selected elements
     if (targetElement === selectedElementRef) {
+      debug('targetElement same as selectedElement')
+
       if (currentHighlight && currentHighlight !== selectedElementRef) {
         currentHighlight.classList.remove("editor-highlight");
       }
@@ -898,6 +906,8 @@
 
     // Remove previous highlight (but not from selected element)
     if (currentHighlight && currentHighlight !== selectedElementRef) {
+      debug('currentHighlight not same as selectedElement')
+
       currentHighlight.classList.remove("editor-highlight");
       currentHighlight.removeAttribute("id");
     }
