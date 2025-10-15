@@ -31,7 +31,7 @@
   function debug(...args) {
     window.parent.postMessage(
       {
-        type: "CONSOLE_LOG",
+        type: "LOGGER",
         value: args.join(", "),
       },
       "*"
