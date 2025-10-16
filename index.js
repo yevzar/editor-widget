@@ -8,7 +8,7 @@
   let isInspectorActive = false;
   let isEditorActive = false;
   let inspectorStyle = null;
-  let textEditorStyle = null;
+  let editorStyle = null;
   let currentHighlight = null;
   let selectedElementRef = null;
   let originalComponentData = null;
@@ -850,9 +850,9 @@
   }
 
   function ensureEditorStyles() {
-    if (!textEditorStyle) {
-      textEditorStyle = document.createElement("style");
-      textEditorStyle.textContent = `
+    if (!editorStyle) {
+      editorStyle = document.createElement("style");
+      editorStyle.textContent = `
         .text-editor-active * {
           cursor: crosshair !important;
         }
@@ -862,7 +862,7 @@
           background-color: rgba(59, 130, 246, 0.1) !important;
         }
       `;
-      document.head.appendChild(textEditorStyle);
+      document.head.appendChild(editorStyle);
     }
   }
 
@@ -945,6 +945,10 @@
         );
         selectedElementRef = null;
         return;
+      }
+
+      if (targetElement.id === 'edited-element' && targetElement.tagName === 'TEXTAREA') {
+        return
       }
 
       window.parent.postMessage(
@@ -1049,9 +1053,9 @@
       }
 
       // Only remove styles if text-editor is off AND no element is selected
-      if (!selectedElementRef && textEditorStyle) {
-        textEditorStyle.remove();
-        textEditorStyle = null;
+      if (!selectedElementRef && editorStyle) {
+        editorStyle.remove();
+        editorStyle = null;
       }
     }
   }
@@ -1120,9 +1124,9 @@
           selectedElementRef = null;
           originalComponentData = null;
 
-          if (!isEditorActive && textEditorStyle) {
-            textEditorStyle.remove();
-            textEditorStyle = null;
+          if (!isEditorActive && editorStyle) {
+            editorStyle.remove();
+            editorStyle = null;
           }
         }
         break;
@@ -1153,9 +1157,9 @@
           originalComponentData = null;
 
           // Remove styles if text editor is not active
-          if (!isEditorActive && textEditorStyle) {
-            textEditorStyle.remove();
-            textEditorStyle = null;
+          if (!isEditorActive && editorStyle) {
+            editorStyle.remove();
+            editorStyle = null;
           }
         }
         break;
