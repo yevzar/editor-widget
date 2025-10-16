@@ -877,28 +877,20 @@
       target === document.body ||
       target === document.documentElement
     ) {
-      debug("Targer exit");
-
       return;
     }
 
     // Only handle elements with plain text content
     if (!hasPlainTextContent(target) && !isImageElement(target)) {
-      debug("Editor not eligable exit");
       return;
     }
 
-    debug("Found element");
+    const targetElement = isImageElement(target)
+      ? getImageElement(target)
+      : target;
 
-    const targetElement = hasPlainTextContent(target)
-      ? target
-      : getImageElement(target);
-
-    debug("targetElement");
     // Skip hover effects on persistently selected elements
     if (targetElement === selectedElementRef) {
-      debug("targetElement same as selectedElement");
-
       if (currentHighlight && currentHighlight !== selectedElementRef) {
         currentHighlight.classList.remove("editor-highlight");
       }
@@ -928,11 +920,11 @@
     e.stopPropagation();
 
     const target = e.target;
-    debug(`targetElement ${target}`)
+    debug(`target ${target}`)
 
-    const targetElement = hasPlainTextContent(target)
-      ? target
-      : getImageElement(target);
+    const targetElement = isImageElement(target)
+      ? getImageElement(target)
+      : target;
 
     debug(`targetElement ${targetElement}`)
     if (selectedElementRef) {
