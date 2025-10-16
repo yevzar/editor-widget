@@ -933,8 +933,8 @@
       : getImageElement(target);
 
     if (selectedElementRef) {
-      currentHighlight.classList.remove("editor-highlight");
-      currentHighlight.removeAttribute("id");
+      selectedElementRef.classList.remove("editor-highlight");
+      selectedElementRef.removeAttribute("id");
 
       if (isImageElement(selectedElementRef)) {
         window.parent.postMessage(
