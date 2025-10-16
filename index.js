@@ -547,6 +547,25 @@
           return true;
         }
       }
+
+      // If no siblings are images, check if parent element is an image
+      const parent = element.parentElement;
+      
+      // Check if parent is an img tag
+      if (parent.tagName.toLowerCase() === "img") {
+        return true;
+      }
+
+      // Check if parent has background image
+      const parentStyles = window.getComputedStyle(parent);
+      const parentBgImage = parentStyles.getPropertyValue("background-image");
+      if (
+        parentBgImage &&
+        parentBgImage !== "none" &&
+        parentBgImage.includes("url(")
+      ) {
+        return true;
+      }
     }
 
     return false;
@@ -592,6 +611,25 @@
         ) {
           return sibling;
         }
+      }
+
+      // If no siblings are images, check if parent element is an image
+      const parent = element.parentElement;
+      
+      // Check if parent is an img tag
+      if (parent.tagName.toLowerCase() === "img") {
+        return parent;
+      }
+
+      // Check if parent has background image
+      const parentStyles = window.getComputedStyle(parent);
+      const parentBgImage = parentStyles.getPropertyValue("background-image");
+      if (
+        parentBgImage &&
+        parentBgImage !== "none" &&
+        parentBgImage.includes("url(")
+      ) {
+        return parent;
       }
     }
 
