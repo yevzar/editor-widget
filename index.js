@@ -928,14 +928,14 @@
     e.stopPropagation();
 
     const target = e.target;
+    debug(`targetElement ${target}`)
+
     const targetElement = hasPlainTextContent(target)
       ? target
       : getImageElement(target);
 
+    debug(`targetElement ${targetElement}`)
     if (selectedElementRef) {
-      selectedElementRef.classList.remove("editor-highlight");
-      selectedElementRef.removeAttribute("id");
-
       if (isImageElement(selectedElementRef)) {
         window.parent.postMessage(
           {
@@ -943,12 +943,17 @@
           },
           "*"
         );
+        selectedElementRef.classList.remove("editor-highlight");
+        selectedElementRef.removeAttribute("id");
         selectedElementRef = null;
         return;
       }
 
-      if (targetElement.id === 'edited-element' && targetElement.tagName === 'TEXTAREA') {
-        return
+      if (
+        targetElement.id === "edited-element" &&
+        targetElement.tagName === "TEXTAREA"
+      ) {
+        return;
       }
 
       window.parent.postMessage(
