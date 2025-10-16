@@ -877,25 +877,27 @@
       target === document.body ||
       target === document.documentElement
     ) {
-      debug('Targer exit')
+      debug("Targer exit");
 
       return;
     }
 
     // Only handle elements with plain text content
     if (!hasPlainTextContent(target) && !isImageElement(target)) {
-      debug('Editor not eligable exit')
+      debug("Editor not eligable exit");
       return;
     }
 
-    debug('Found element')
+    debug("Found element");
 
-    const targetElement = hasPlainTextContent(target) ? target : getImageElement(target)
+    const targetElement = hasPlainTextContent(target)
+      ? target
+      : getImageElement(target);
 
-    debug('targetElement')
+    debug("targetElement");
     // Skip hover effects on persistently selected elements
     if (targetElement === selectedElementRef) {
-      debug('targetElement same as selectedElement')
+      debug("targetElement same as selectedElement");
 
       if (currentHighlight && currentHighlight !== selectedElementRef) {
         currentHighlight.classList.remove("editor-highlight");
@@ -906,7 +908,7 @@
 
     // Remove previous highlight (but not from selected element)
     if (currentHighlight && currentHighlight !== selectedElementRef) {
-      debug('currentHighlight not same as selectedElement')
+      debug("currentHighlight not same as selectedElement");
 
       currentHighlight.classList.remove("editor-highlight");
       currentHighlight.removeAttribute("id");
@@ -926,19 +928,13 @@
     e.stopPropagation();
 
     const target = e.target;
-    const targetElement = hasPlainTextContent(target) ? target : getImageElement(target)
-    if (targetElement.id === "edited-element") {
-      // Clear previous selection if selecting a different element
-      if (selectedElementRef && selectedElementRef !== targetElement) {
-        selectedElementRef.classList.remove("editor-highlight");
-        selectedElementRef.removeAttribute("id");
-      }
+    const targetElement = hasPlainTextContent(target)
+      ? target
+      : getImageElement(target);
 
-      // Also clear any current highlight that might be lingering
-      if (currentHighlight && currentHighlight !== targetElement) {
-        currentHighlight.classList.remove("editor-highlight");
-        currentHighlight.removeAttribute("id");
-      }
+    if (selectedElementRef) {
+      currentHighlight.classList.remove("editor-highlight");
+      currentHighlight.removeAttribute("id");
 
       if (isImageElement(selectedElementRef)) {
         window.parent.postMessage(
